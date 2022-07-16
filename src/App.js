@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import { Login } from './components/auth/Login';
+import { SignUp } from './components/auth/SignUp';
+import { Chats } from './components/chat/Chats';
+import { Navbar } from './components/layouts/Navbar';
+import { Home } from './components/pages/Home';
+import { Users } from './components/users/Users';
+import { validate } from './features/auth/extraReducers';
+
 
 function App() {
+
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+      dispatch(validate())
+  },[])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Navbar/>
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/signup' element={<SignUp/>}/>
+
+         {/*<Route path='/users' element={<Users/>}/>
+        <Route path='/chats' element={<Chats/>}/>
+        <Route path='/chats/:id' element={<Chats/>}/>
+        <Route path='/users' element={<Users/>}/> */}
+
+      </Routes>
+    </BrowserRouter>
+    
   );
 }
 
